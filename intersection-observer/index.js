@@ -1,24 +1,19 @@
-function isElementInViewport(el) {
-  var rect = el.getBoundingClientRect();
-  return (
-    rect.top >= 0 &&
-    rect.left >= 0 &&
-    rect.bottom <=
-      (window.innerHeight || document.documentElement.clientHeight) &&
-    rect.right <= (window.innerWidth || document.documentElement.clientWidth)
-  );
-}
+// IntersectionObserver 를 등록한다.
+const io = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    // 관찰 대상이 viewport 안에 들어온 경우 'tada' 클래스를 추가
+    if (entry.intersectionRatio > 0) {
+      entry.target.classList.add('tada');
+    }
+    // 그 외의 경우 'tada' 클래스 제거
+    else {
+      entry.target.classList.remove('tada');
+    }
+  })
+})
 
-const addEventToEl = (elList) => {
-  document.addEventListener("scroll", () => {
-    elList.forEach((el) => {
-      if (isElementInViewport(el)) {
-        el.classList.add("tada");
-      } else {
-        el.classList.remove("tada");
-      }
-    });
-  });
-};
-const boxElList = document.querySelectorAll(".box");
-addEventToEl(boxElList);
+// 관찰할 대상을 선언하고, 해당 속성을 관찰시킨다.
+const boxElList = document.querySelectorAll('.box');
+boxElList.forEach((el) => {
+  io.observe(el);
+})

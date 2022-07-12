@@ -22,3 +22,5 @@ const addEventToEl = (elList) => {
 };
 const boxElList = document.querySelectorAll(".box");
 addEventToEl(boxElList);
+
+// while (true) {}
